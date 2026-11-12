@@ -1,150 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Channel Pulse</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Channel Pulse</title>
 <style>
-:root{--bg:#f5f6fa;--card:#fff;--ink:#14151a;--mute:#6b7280;--line:#e8eaf0;--acc:#5b5bf0;--acc2:#e9e9ff;--ok:#12a36b;--okbg:#dcf7ec;--bad:#e5484d;--badbg:#fde6e7;--warn:#d98a00;--warnbg:#fff1d6;--na:#eef0f4;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0f14;--card:#171923;--ink:#eef0f6;--mute:#9aa1b2;--line:#252838;--acc:#8b8bff;--acc2:#23244a;--ok:#3ddc97;--okbg:#10332a;--bad:#ff7a80;--badbg:#3a1a1d;--warn:#ffc04d;--warnbg:#3a2c0e;--na:#222536;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e0f14;--card:#171923;--ink:#eef0f6;--mute:#9aa1b2;--line:#252838;--acc:#8b8bff;--acc2:#23244a;--ok:#3ddc97;--okbg:#10332a;--bad:#ff7a80;--badbg:#3a1a1d;--warn:#ffc04d;--warnbg:#3a2c0e;--na:#222536;color-scheme:dark}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
-.wrap{max-width:1240px;margin:0 auto;padding:22px 18px 48px}
-header{margin-bottom:18px}h1{font-size:22px;margin:0;letter-spacing:-.02em}.sub{color:var(--mute);font-size:13px}
-button{font:inherit;cursor:pointer;border:0;background:none;color:var(--mute);padding:7px 14px;border-radius:9px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
-.k{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em}.v{font-size:30px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
-.d{font-size:12px;margin-top:2px;color:var(--mute)}.up{color:var(--ok)}.dn{color:var(--bad)}
-.grid{display:grid;grid-template-columns:350px 1fr;gap:14px}@media(max-width:860px){.grid{grid-template-columns:1fr}}
-.chips{display:flex;gap:6px;margin:8px 0 10px;flex-wrap:wrap}.chip{border:1px solid var(--line);padding:4px 11px;border-radius:99px;font-size:12px}.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
-.list{max-height:600px;overflow:auto;margin:0 -6px;padding:0 6px}
-.row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:11px;cursor:pointer}.row:hover{background:var(--bg)}.row.sel{background:var(--acc2)}
-.dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--na)}.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}.dot.warn{background:var(--warn)}
-.nm{flex:1;min-width:0}.nm b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nm span{color:var(--mute);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-.r{text-align:right}.num{font-weight:700;font-variant-numeric:tabular-nums;display:block}.g{font-size:12px;font-variant-numeric:tabular-nums}
-.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--na);color:var(--mute)}.pill.ok{background:var(--okbg);color:var(--ok)}.pill.bad{background:var(--badbg);color:var(--bad)}.pill.warn{background:var(--warnbg);color:var(--warn)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}.stats div{background:var(--bg);border-radius:12px;padding:10px 12px}.stats b{display:block;font-size:20px}.stats span{font-size:12px;color:var(--mute)}
-h2{font-size:16px;margin:0}.head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-svg text{fill:var(--mute);font-size:11px;font-family:inherit}.ln{fill:none;stroke:var(--acc);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}.ar{fill:var(--acc);opacity:.12}.pt{fill:var(--card);stroke:var(--acc);stroke-width:1.6}.gl{stroke:var(--line);stroke-width:1}.sp{fill:none;stroke:var(--acc);stroke-width:1.5}
-.stack{display:grid;gap:14px}
-#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:5px 9px;border-radius:8px;font-size:12px;display:none;z-index:9;white-space:nowrap}
-.foot{margin-top:18px;color:var(--mute);font-size:12px}
-</style>
-</head>
-<body>
-<div class="wrap" id="app"></div>
-<div id="tip"></div>
+:root{--bg:#f5f6fa;--card:#fff;--ink:#14151a;--mute:#6b7280;--line:#e8eaf0;--acc:#5b5bf0;--acc2:#e9e9ff;--ok:#12a36b;--okbg:#dcf7ec;--bad:#e5484d;--badbg:#fde6e7;--warn:#d98a00;--warnbg:#fff1d6;--na:#eef0f4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e0f14;--card:#171923;--ink:#eef0f6;--mute:#9aa1b2;--line:#252838;--acc:#8b8bff;--acc2:#23244a;--ok:#3ddc97;--okbg:#10332a;--bad:#ff7a80;--badbg:#3a1a1d;--warn:#ffc04d;--warnbg:#3a2c0e;--na:#222536;color-scheme:dark}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 48px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+h1{font-size:22px;margin:0}h2{font-size:16px;margin:0}.sub{color:var(--mute);font-size:13px}a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+button,select,input{font:inherit;color:var(--ink)}button{cursor:pointer;border:0;background:none;color:var(--mute);padding:7px 14px;border-radius:9px}
+.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);padding:4px;border-radius:12px}.tabs button.on{background:var(--acc);color:#fff}
+.btn{background:var(--acc2);color:var(--acc);font-weight:600}
+input,select{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:7px 10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}.kpis .card{margin:0}
+.k{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em}.v{font-size:26px;font-weight:700;letter-spacing:-.02em}.d{font-size:12px;color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:860px){.two{grid-template-columns:1fr}}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.tw{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--mute);font-weight:600;font-size:12px;cursor:pointer}td.n,th.n{text-align:right}td.t{white-space:normal;min-width:220px}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--na);color:var(--mute)}.pill.ok{background:var(--okbg);color:var(--ok)}.pill.warn{background:var(--warnbg);color:var(--warn)}.pill.bad{background:var(--badbg);color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:12px 0}.stats div{background:var(--bg);border-radius:12px;padding:10px 12px}.stats b{display:block;font-size:18px}.stats span{font-size:12px;color:var(--mute)}
+svg text{fill:var(--mute);font-size:11px}.ln{fill:none;stroke:var(--acc);stroke-width:2.2;stroke-linejoin:round}.ar{fill:var(--acc);opacity:.12}.gl{stroke:var(--line)}.bar{fill:var(--acc);opacity:.4}.bar.last{opacity:1}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:5px 9px;border-radius:8px;font-size:12px;display:none;z-index:9}
+.note{background:var(--acc2);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:13px}.clk{cursor:pointer}details.pl{margin:0 0 10px;padding:12px 14px}summary{cursor:pointer}.clk:hover{color:var(--acc)}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);max-width:560px;width:92%}dialog input{width:100%;margin:4px 0 10px}
+</style></head><body><div class="wrap" id="app"></div><div id="tip"></div>
+<dialog id="dlg"><h2>Connect your data</h2>
+<p class="sub"><b>Option 1: straight from YouTube (no script, no sheet).</b> Create a free YouTube Data API key (Google Cloud Console → enable "YouTube Data API v3" → Credentials → API key) and restrict it to your website address and to that API only.</p>
+<label class="sub">API key</label><input id="ak" placeholder="AIza..." autocomplete="off">
+<label class="sub">Channel IDs (one per line)</label><textarea id="ids" rows="5" style="width:100%;font:12px monospace;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px;margin:4px 0 10px"></textarea>
+<p class="sub"><b>Option 2: from a published Google Sheet</b> (only used if no API key above). File → Share → Publish to web → <b>Entire document</b>, paste the link, then give the gid number of each tab.</p>
+<input id="cl" placeholder="Published link https://docs.google.com/spreadsheets/d/e/2PACX-.../pubhtml">
+<input id="g1" placeholder="gid of the Channels tab"><input id="g2" placeholder="gid of the Playlists tab"><input id="g3" placeholder="gid of the Videos tab">
+<div style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap"><button id="cc">Clear saved data</button><span><button id="cx">Cancel</button><button class="btn" id="cs">Save and load</button></span></div></dialog>
 <script>
-let D={"dates":["2026-02-06","2026-02-13","2026-02-20","2026-02-27","2026-03-06","2026-03-13","2026-03-20","2026-03-27","2026-04-10","2026-04-17","2026-04-24","2026-05-01","2026-05-08","2026-05-15","2026-05-22","2026-05-27","2026-05-29","2026-06-03","2026-06-10","2026-06-17","2026-06-24","2026-07-01","2026-07-08","2026-07-15","2026-07-22","2026-07-29","2026-08-05","2026-08-12","2026-08-19","2026-08-26","2026-08-29","2026-09-02","2026-09-09","2026-09-16","2026-09-23","2026-09-30","2026-10-07","2026-10-14","2026-10-28","2026-11-04","2026-11-10"],"ch":[["Sinhala","Monastery",". . . . . . . . . . . . . . . . . 1870 1874 1879 1874 1883 1887 1893 1896 1904 1909 1912 1916 1921 1926 1927 1930 1934 1940 1947 1953 1958 1967 1969 1972"],["English","Monastery",". . . . . . . . . . . . . . . . . 729 732 736 738 743 747 751 753 756 758 761 762 764 765 768 770 773 777 780 783 785 789 792 795"],["Hindi","Monastery",". . . . . . . . . . . . . . . . . 249 251 253 255 257 259 260 260 260 260 262 264 266 266 268 270 272 274 276 278 280 284 286 286"],["Tamil","Monastery",". . . . . . . . . . . . . . . . . 79 81 84 86 89 92 94 96 101 104 107 110 114 115 118 121 125 129 133 136 139 145 148 148"],["German","Maithree Thero",". . . . . . . . . . . . . . . . . 188 188 192 196 200 205 207 211 213 216 219 223 224 225 227 230 233 235 238 240 241 245 246 248"],["Polish","Maithree Thero",". . . . . . . . . . . . . . . . . 31 34 37 39 42 45 47 49 50 51 52 53 53 53 54 55 55 57 58 59 60 62 63 63"],["French","Maithree Thero",". . . . . . . . . . . . . . . . . 33 36 38 41 44 47 49 50 52 54 55 56 56 57 57 59 61 62 63 65 66 68 70 71"],["Compass","Anagarikaa",". . . . . . . . . . . . . . . . . 169 171 173 175 177 179 180 182 184 186 148 150 151 151 153 155 157 159 160 162 163 166 167 168"],["Swedish","AI","1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 3 4 5 6 7 7 9 10 11"],["Piriwena","Sara Thero","12 14 15 15 15 15 15 15 12 11 11 11 46 48 50 51 52 53 56 57 59 61 64 69 70 73 75 79 81 83 85 87 90 92 93 96 100 101 105 107 109"],["Chinese","Sarada Thero","16 16 17 18 19 21 22 24 28 29 32 34 36 39 41 43 44 46 49 50 53 58 62 66 69 73 77 80 84 88 89 92 95 97 100 102 103 105 110 111 112"],["Telugu","Jeewaka Thero","10 11 12 13 14 15 16 17 23 26 29 32 35 38 41 44 44 47 49 52 56 60 64 69 72 76 80 85 88 92 94 97 100 104 108 112 116 120 128 132 135"],["Japanese","Sugathanatha Thero","5 5 5 5 6 7 9 11 15 16 18 20 22 23 24 26 26 27 28 29 31 33 39 47 54 61 67 76 82 89 93 98 104 105 106 107 107 108 121 130 135"],["Thai","Koasala Thero","9 10 11 12 13 14 15 16 18 19 20 21 22 23 24 25 25 26 27 28 28 30 30 32 33 34 34 36 36 38 38 39 39 40 40 42 42 43 45 45 47"],["Indonesian","Chethiyadhamma Thero","9 10 11 12 13 14 15 16 18 19 20 21 22 23 24 25 25 26 27 28 29 30 31 32 33 34 35 35 36 37 37 38 39 40 41 42 43 44 45 46 46"],["Spanish","Muditha Thero","6 7 8 9 10 11 12 13 15 15 16 17 18 19 20 20 21 21 22 23 24 25 26 27 28 29 30 31 32 35 37 38 42 45 48 51 54 59 66 66 68"],["Italian","Nirodadhamma Thero","6 6 6 3 4 6 6 8 10 10 11 12 14 14 15 15 15 16 17 17 17 18 19 20 21 21 22 23 24 24 25 25 25 26 26 27 28 29 30 30 30"],["Russian","Chethiyarakkitha Thero","9 12 13 13 13 14 15 15 15 15 15 15 15 15 15 15 15 15 15 16 16 17 17 17 18 18 19 19 20 20 20 20 20 20 20 20 21 21 23 23 23"],["Korean","Aththadassi Thero","6 7 7 7 7 8 8 8 8 8 8 8 8 8 9 9 9 9 9 10 10 11 9 10 10 10 11 11 11 12 12 13 13 13 13 13 13 14 14 14 14"],["Hebrew","LImor M","2 3 3 3 3 3 5 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 7 7 7 8 8 8 9 9 10 10 10 10 12 12 14 15 15"],["Malayalam","Mahadew Mahatha","3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 5 5 5 5 6 7 8 9 10 11 11 12 12 12 12 12 12 12 13 13 15 15 15"],["Portuguese","AI","2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 5 5 6 7 7 9 10 12 13 14"],["Sign Language","Mudithwansa Thero","2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 7 8 9"],["Swahili","Nadeeka AM","2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 6 7 8"],["Arabic","Bodarama Thero","1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 3 3 4 4 5 5 6 6 6 7 7 8 8 9 10 10 11"],["Dutch","Jorge M","1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3"],["Gujarati","AI","2 3 4 4 4 4 4 4 4 4 4 4 4 4 4 5 5 6 7 8 9 10 10 10 10 10 10 10 10 10 10 . 0 0 0 0 0 0 0 0 0"]]},T,N,L,chs,mode="Snapshot",why="",popen=false;
-const LIVE=["https://docs.google.com/spreadsheets/d/e/2PACX-1vQbihHRBmdMLPWnTVXKOsYbzk8mEfg-R08oyGAtJVu8KGt3z7k3DTBNXbAxwbvzDlFu5e3-xIyFmOQC/pub?gid=0&single=true&output=csv"];
-function init(){T=D.dates.map(d=>new Date(d+"T00:00:00").getTime());N=T.length;L=N-1;build()}
-const fd=(t,y)=>new Date(t).toLocaleDateString("en-US",y?{month:"short",day:"numeric",year:"numeric"}:{month:"short",day:"numeric"});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const nf=n=>n==null?"–":n.toLocaleString("en-US");
-function build(){chs=D.ch.map(([name,resp,s])=>{const v=s.split(" ").map(x=>x=="."?null:+x);let mx=0;
- v.forEach((x,i)=>{if(x==null)return;if(x===0&&mx>0)v[i]=null;else mx=Math.max(mx,x)});
- let last=null;const f=v.map(x=>{if(x!=null)last=x;return last});
- const pts=[];v.forEach((x,i)=>{if(x!=null)pts.push(i)});
- const ci=pts[pts.length-1],pi=pts[pts.length-2],p2=pts[pts.length-3],p4=pts[pts.length-5];
- const stale=ci<L,cur=v[ci],prev=pi!=null?v[pi]:null;
- const gain=!stale&&prev!=null?cur-prev:null,lastGain=pi!=null&&p2!=null?prev-v[p2]:null;
- let up=-1;for(let k=pts.length-1;k>0;k--){if(v[pts[k]]>v[pts[k-1]]){up=pts[k];break}}
- const st=stale||gain==null?"na":gain>0?"ok":gain==0?"bad":"warn";
- return{name,resp,v,f,pts,cur,prev,gain,lastGain,four:p4!=null&&!stale?cur-v[p4]:null,start:cur-v[pts[0]],first:pts[0],up,st,stale,ci}})}
-const lab={ok:"Uploaded",bad:"No new upload",warn:"Videos removed",na:"No data"};
-let sel=0,filter="all",sortG=false;
-function nice(lo,hi){const r=Math.max(hi-lo,4),s=Math.pow(10,Math.floor(Math.log10(r/4))),m=[1,2,2.5,5,10].find(k=>r/4<=k*s)*s;return[Math.floor(lo/m)*m,Math.ceil(hi/m)*m,m]}
-let reg=[];
-function chart(pts){const W=640,H=230,l=46,r=12,t=14,b=26,id=reg.push(pts)-1;
- const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const[x0,x1]=[Math.min(...xs),Math.max(...xs)];
- const[lo,hi,m]=nice(Math.min(...ys),Math.max(...ys));
- const X=x=>l+(x1==x0?0:(x-x0)/(x1-x0))*(W-l-r),Y=y=>t+(1-(y-lo)/(hi-lo||1))*(H-t-b);
- let g="";for(let y=lo;y<=hi+1e-9;y+=m)g+=`<line class="gl" x1="${l}" x2="${W-r}" y1="${Y(y)}" y2="${Y(y)}"/><text x="${l-6}" y="${Y(y)+4}" text-anchor="end">${Math.round(y*10)/10}</text>`;
- const d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join("");
- const ticks=[0,.25,.5,.75,1].map(k=>x0+(x1-x0)*k);
- return`<svg viewBox="0 0 ${W} ${H}" width="100%" data-c="${id}">${g}<path class="ar" d="${d}L${X(x1)},${Y(lo)}L${X(x0)},${Y(lo)}Z"/><path class="ln" d="${d}"/>`+
- (pts.length<=60?pts.map(p=>`<circle class="pt" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="2.6"/>`).join(""):"")+
- ticks.map((x,i)=>`<text x="${X(x)}" y="${H-6}" text-anchor="${i==0?"start":i==4?"end":"middle"}">${fd(x)}</text>`).join("")+`<g class="hv" style="display:none"><line class="gl" y1="${t}" y2="${H-b}" stroke="var(--acc)"/><circle r="4.5" fill="var(--acc)"/></g><rect x="0" y="0" width="${W}" height="${H}" fill="transparent" data-geom="${l},${r},${t},${b},${x0},${x1},${lo},${hi}"/></svg>`}
-function spark(c){const p=c.pts.slice(-12).map(i=>c.v[i]),lo=Math.min(...p),hi=Math.max(...p);
- return`<svg width="54" height="22" viewBox="0 0 54 22"><path class="sp" d="${p.map((y,i)=>(i?"L":"M")+(i/(p.length-1||1)*52+1).toFixed(1)+","+(20-(hi==lo?.5:(y-lo)/(hi-lo))*18).toFixed(1)).join("")}"/></svg>`}
-function render(){reg=[];const keep=document.scrollingElement.scrollTop;
- const tot=chs.reduce((a,c)=>a+c.cur,0),totP=chs.reduce((a,c)=>a+(c.stale?c.cur:c.prev??c.cur),0),dl=tot-totP;
- const n=s=>chs.filter(c=>c.st==s).length;
- let list=chs.map((c,i)=>({c,i})).filter(x=>filter=="all"||x.c.st==filter);
- if(sortG)list.sort((a,b)=>(b.c.gain??-9)-(a.c.gain??-9));
- const c=chs[sel],days=c.up>=0?Math.round((T[L]-T[c.up])/864e5):null;
- const allPts=[];for(let i=0;i<N;i++){if(chs.every(x=>x.f[i]!=null))allPts.push([T[i],chs.reduce((a,x)=>a+x.f[i],0)])}
- document.getElementById("app").innerHTML=`<header><h1>Channel Pulse</h1><div class="sub">Cumulative videos per channel · ${chs.length} channels · data through ${fd(T[L],1)} · ${mode=="Live"?"live from your sheet":mode=="Pasted"?"using data you pasted (live sync unavailable)":"saved snapshot (live sync unavailable)"}</div></header>
- <div class="kpis">
- <div class="card"><div class="k">Total videos</div><div class="v">${nf(tot)}</div><div class="d ${dl>0?"up":dl<0?"dn":""}">${dl>0?"▲ +":dl<0?"▼ ":"● "}${dl} since previous update</div></div>
- <div class="card"><div class="k">Channels uploaded</div><div class="v">${n("ok")}<span style="font-size:16px;color:var(--mute)"> / ${chs.length}</span></div><div class="d">in the latest update</div></div>
- <div class="card"><div class="k">No new upload</div><div class="v ${n("bad")?"dn":""}">${n("bad")}</div><div class="d">need attention</div></div>
- <div class="card"><div class="k">No data</div><div class="v">${n("na")}</div><div class="d">missing in latest update</div></div></div>
- <div class="grid"><div class="card"><div class="head"><h2>Channels</h2><button class="chip" id="sg">${sortG?"Sorted by gain":"Sheet order"}</button></div>
- <div class="chips">${[["all","All"],["ok","Uploaded"],["bad","No new upload"],["na","No data"]].map(([k,t])=>`<button class="chip ${filter==k?"on":""}" data-f="${k}">${t}</button>`).join("")}</div>
- <div class="list">${list.map(({c:x,i})=>`<div class="row ${i==sel?"sel":""}" data-i="${i}"><span class="dot ${x.st}"></span><div class="nm"><b>${esc(x.name)}</b><span>${esc(x.resp)}</span></div>${spark(x)}<div class="r"><span class="num">${nf(x.cur)}</span><span class="g ${x.gain>0?"up":x.gain<0?"dn":""}">${x.gain==null?"–":x.gain>0?"+"+x.gain:x.gain}</span></div></div>`).join("")||'<div class="sub" style="padding:20px;text-align:center">Nothing here</div>'}</div></div>
- <div class="stack"><div class="card"><div class="head"><h2>${esc(c.name)} <span class="sub">${esc(c.resp)}</span></h2><span class="pill ${c.st}">${lab[c.st]}</span></div>
- <div class="stats"><div><b>${nf(c.cur)}</b><span>Total videos</span></div><div><b>${c.gain==null?"–":(c.gain>0?"+":"")+c.gain}</b><span>Latest update</span></div><div><b>${c.lastGain==null?"–":(c.lastGain>0?"+":"")+c.lastGain}</b><span>Update before</span></div><div><b>${c.four==null?"–":(c.four>0?"+":"")+c.four}</b><span>Last 4 updates</span></div><div><b>${days==null?"–":days+"d"}</b><span>Since last upload${c.up>=0?" ("+fd(T[c.up])+")":""}</span></div><div><b>+${c.start}</b><span>Since ${fd(T[c.first])}</span></div></div>
- ${chart(c.pts.map(i=>[T[i],c.v[i]]))}</div>
- <div class="card"><div class="head"><h2>All channels: cumulative total</h2><span class="sub">from ${fd(allPts[0][0])}, when every channel was tracked</span></div>${chart(allPts)}</div></div></div>
- <div class="foot">${mode=="Live"?"Loaded live from your Google Sheet each time this page opens.":"Snapshot of the Google Sheet through "+fd(T[L],1)+". Could not load the sheet, so showing saved data. Reason: "+why} Counts are running totals of videos on each channel. A 0 after earlier real counts (Gujarati, from 9 Sep) is treated as missing data.${panel()}</div>`;
- document.scrollingElement.scrollTop=keep}
-document.addEventListener("click",e=>{const t=e.target.closest("[data-f],.row[data-i],#sg,#pm,#pl");if(!t)return;
- if(t.id=="pm"){popen=!popen}else if(t.id=="pl"){try{const tx=document.getElementById("pt").value;const p=parseSheet(csv(tx));if(!p.ch.length||p.dates.length<2)throw"no channel data found";D=p;mode="Pasted";sel=0;try{localStorage.setItem("cp.paste",tx)}catch(e){}init()}catch(e){alert("Could not read that data: "+(e&&e.message||e));return}}else if(t.dataset.f)filter=t.dataset.f;else if(t.id=="sg")sortG=!sortG;else sel=+t.dataset.i;render()});
-const tip=document.getElementById("tip");
-document.addEventListener("mousemove",e=>{const rc=e.target.closest&&e.target.closest("rect[data-geom]");
- if(!rc){tip.style.display="none";document.querySelectorAll(".hv").forEach(h=>h.style.display="none");return}
- const svg=rc.ownerSVGElement,[l,r,t,b,x0,x1,lo,hi]=rc.dataset.geom.split(",").map(Number),pts=reg[+svg.dataset.c],bb=svg.getBoundingClientRect(),s=bb.width/640;
- const gx=(e.clientX-bb.left)/s,X=p=>l+(x1==x0?0:(p[0]-x0)/(x1-x0))*(640-l-r);
- let best=pts[0];pts.forEach(p=>{if(Math.abs(X(p)-gx)<Math.abs(X(best)-gx))best=p});
- const y=t+(1-(best[1]-lo)/(hi-lo||1))*(230-t-b),h=svg.querySelector(".hv");h.style.display="";
- h.querySelector("line").setAttribute("x1",X(best));h.querySelector("line").setAttribute("x2",X(best));h.querySelector("circle").setAttribute("cx",X(best));h.querySelector("circle").setAttribute("cy",y);
- tip.style.display="block";tip.textContent=fd(best[0],1)+" · "+best[1].toLocaleString("en-US")+" videos";tip.style.left=(e.clientX+12)+"px";tip.style.top=(e.clientY-34)+"px"});
+const DAY=864e5,$=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fd=t=>t==null?"–":new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+const nf=n=>n==null||isNaN(n)?"–":Number(n).toLocaleString("en-US");
+let S={ch:[],pl:[],vd:[],mode:"demo",why:""},cv="table",view="over",sel=null,sk="count",sd=-1,q="",vch="",vs="new",reg=[];
+const cfg=()=>{try{return JSON.parse(localStorage.getItem("yt.cfg"))||{}}catch(e){return{}}};
 function csv(t){const R=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
- if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
- else if(c=='"')q=true;else if(c==","){r.push(f);f=""}else if(c=="\n"){r.push(f);R.push(r);r=[];f=""}else if(c!="\r")f+=c}
+ if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==","){r.push(f);f=""}else if(c=="\n"){r.push(f);R.push(r);r=[];f=""}else if(c!="\r")f+=c}
  if(f||r.length){r.push(f);R.push(r)}return R}
-const MON={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
-function pdate(x){x=(x||"").trim();if(!x)return null;let m;
- if(m=/^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(x))return[+m[1],+m[2],+m[3]];
- if(m=/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})$/.exec(x))return[+m[3]<100?2000+ +m[3]:+m[3],+m[2],+m[1]];
- if(m=/^(\d{1,2})[\/.\-](\d{1,2})$/.exec(x))return[null,+m[2],+m[1]];
- let a=/^(\d{1,2})\s+([A-Za-z]{3})/.exec(x);if(a&&MON[a[2].toLowerCase()]){const y=/(\d{4})/.exec(x);return[y?+y[1]:null,MON[a[2].toLowerCase()],+a[1]]}
- a=/^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2})\b/.exec(x);if(a&&MON[a[1].toLowerCase()]){const y=/(\d{4})/.exec(x);return[y?+y[1]:null,MON[a[1].toLowerCase()],+a[2]]}
- return null}
-function fixYears(ds){let k=0,pm=0;ds.forEach(d=>{if(d[0]==null){if(d[1]<pm)k++;pm=d[1]}});let y=new Date().getFullYear()-k;pm=0;
- return ds.map(d=>{if(d[0]!=null){y=d[0];pm=d[1];return d}if(d[1]<pm)y++;pm=d[1];return[y,d[1],d[2]]})}
-const iso=d=>`${d[0]}-${String(d[1]).padStart(2,"0")}-${String(d[2]).padStart(2,"0")}`;
-const isText=x=>x&&!/^[\d.,\s]+$/.test(x)&&!/^n\/a$/i.test(x)&&!pdate(x);
-const val=x=>{x=(x||"").trim().replace(/,/g,"");return x===""||/n\/a/i.test(x)||isNaN(+x)?".":x};
-function parseSheet(rows){rows=rows.map(r=>r.map(x=>(x||"").trim()));let out;
- const hi=rows.findIndex(r=>r.filter(x=>pdate(x)).length>3);
- if(hi>=0){const dc=[];rows[hi].forEach((x,i)=>{if(pdate(x))dc.push(i)});const ds=fixYears(dc.map(i=>pdate(rows[hi][i])));
-  const body=rows.slice(hi+1),first=dc[0];let nc=-1,rc=-1;
-  for(let c=0;c<first;c++){if(body.filter(r=>isText(r[c])).length>=3){if(nc<0)nc=c;else if(rc<0){rc=c}}}
-  if(nc<0)throw"no channel name column found";
-  const ch=body.filter(r=>isText(r[nc])&&dc.some(i=>val(r[i])!=".")).map(r=>[r[nc],rc>=0?r[rc]:"",dc.map(i=>val(r[i]))]);
-  out={dates:ds.map(iso),ch}}
- else{let c=-1;for(let k=0;k<Math.min(4,(rows[0]||[]).length);k++){if(rows.filter(r=>pdate(r[k])).length>3){c=k;break}}
-  if(c<0)throw"could not find a row or column of dates";
-  const di=[];rows.forEach((r,i)=>{if(pdate(r[c]))di.push(i)});const hr=rows[di[0]-1]||[];
-  const cols=[];hr.forEach((x,j)=>{if(j!=c&&isText(x)&&!/^total/i.test(x))cols.push(j)});
-  if(!cols.length)throw"no channel names found above the dates";
-  const ds=fixYears(di.map(i=>pdate(rows[i][c])));
-  out={dates:ds.map(iso),ch:cols.map(j=>[hr[j],"",di.map(i=>val(rows[i][j]))])}}
- const ord=out.dates.map((d,i)=>i).sort((a,b)=>out.dates[a]<out.dates[b]?-1:out.dates[a]>out.dates[b]?1:0);
- return{dates:ord.map(i=>out.dates[i]),ch:out.ch.map(([n,r,v])=>[n,r,ord.map(i=>v[i]).join(" ")])}}
-async function live(){try{let txt,errs=[];for(const u of LIVE){try{const res=await fetch(u);if(res.ok){txt=await res.text();break}errs.push("HTTP "+res.status)}catch(e){errs.push(e.message||"blocked")}}
- if(!txt)throw"could not download ("+errs.join(", ")+")";
- const rows=csv(txt);let p;try{p=parseSheet(rows)}catch(e){throw e+". First rows: "+rows.slice(0,3).map(r=>r.slice(0,6).join(" | ")).join(" // ")}
- if(!p.ch.length||p.dates.length<2)throw"no channel data found";
- D=p;mode="Live";why="";sel=0;init();render()}catch(e){why=String(e&&e.message||e);render()}}
-function panel(){if(mode=="Live")return"";return`<div style="margin-top:12px"><button class="chip on" id="pm">${popen?"Hide":"Paste sheet data manually"}</button></div>`+(popen?`<div class="card" style="margin-top:10px"><div class="sub" style="margin-bottom:8px">Open your published CSV link in the browser, select all (Ctrl/Cmd+A), copy, and paste it here. It is remembered on this device.</div><textarea id="pt" rows="6" style="width:100%;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea><div style="margin-top:8px"><button class="chip on" id="pl">Load this data</button></div></div>`:"")}
-try{const tx=localStorage.getItem("cp.paste");if(tx){const p=parseSheet(csv(tx));if(p.ch.length&&p.dates.length>1){D=p;mode="Pasted"}}}catch(e){}
-init();render();live();
-</script>
-</body>
-</html>
+const objs=rows=>{const h=(rows[0]||[]).map(x=>x.trim());return rows.slice(1).filter(r=>r.some(x=>x.trim())).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||"").trim()])))};
+const num=x=>{x=String(x||"").replace(/,/g,"");return x===""||isNaN(+x)?0:+x};
+const dt=x=>{x=(x||"").trim();if(!x)return null;const t=Date.parse(x.replace(" ","T"));return isNaN(t)?null:t};
+const wk0=t=>{const d=new Date(t);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()};
+function build(ch,pl,vd,pi=[]){const now=Date.now(),w0=wk0(now);
+ S.vd=vd.map(r=>({cid:r["Channel ID"],ch:r["Channel"],id:r["Video ID"],title:r["Title"],t:dt(r["Published"]),dur:r["Duration"],views:num(r["Views"]),likes:num(r["Likes"]),com:num(r["Comments"]),link:r["Link"]})).filter(v=>v.t!=null).sort((a,b)=>b.t-a.t);
+ const pim={};pi.forEach(x=>(pim[x.pid]=pim[x.pid]||[]).push(x));
+ S.pl=pl.map(r=>{const id=r["Playlist ID"],it=(pim[id]||[]).sort((a,b)=>a.added-b.added);return{cid:r["Channel ID"],id,title:r["Playlist"],created:dt(r["Created"]),n:num(r["Videos in playlist"]),link:r["Link"],items:it,last:it.length?it[it.length-1].added:null}});
+ const by={};S.vd.forEach(v=>(by[v.cid]=by[v.cid]||[]).push(v));
+ S.ch=ch.map(r=>{const id=r["Channel ID"],v=by[id]||[],last=v.length?v[0].t:null;
+  return{id,name:r["Channel"]||id,handle:r["Handle"],country:r["Country"],created:dt(r["Created"]),subs:r["Subscribers"]==="hidden"?null:num(r["Subscribers"]),views:num(r["Total views"]),count:num(r["Video count (YouTube)"]),
+  v,last,days:last==null?null:Math.floor((now-last)/DAY),n7:v.filter(x=>now-x.t<7*DAY).length,n30:v.filter(x=>now-x.t<30*DAY).length,pls:S.pl.filter(p=>p.cid==id)}});
+ S.now=now;S.w0=w0}
+const weekly=(vs,k=12)=>{const c=Array(k).fill(0);vs.forEach(v=>{const i=k-1-Math.round((S.w0-wk0(v.t))/(7*DAY));if(i>=0&&i<k)c[i]++});return c};
+const labels=(k=12)=>Array.from({length:k},(_,i)=>new Date(S.w0-(k-1-i)*7*DAY).toLocaleDateString("en-US",{month:"short",day:"numeric"}));
+function cum(vs,k=52){const ts=vs.map(v=>v.t),p=[];for(let i=k-1;i>=0;i--){const e=i==0?S.now:S.w0-i*7*DAY+7*DAY;p.push([e,ts.filter(t=>t<e).length])}return p}
+const kf=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(1)+"k":String(n);
+function bars(vals,lab,W=640,H=170,fm=String){const n=vals.length,m=Math.max(1,...vals),bw=W/n,sk=Math.ceil(n/12);return`<svg viewBox="0 0 ${W} ${H}" width="100%">`+vals.map((v,i)=>{const h=v/m*(H-40),x=i*bw+bw*.15,w=bw*.7,sh=(n-1-i)%sk==0;return`<rect class="bar ${i==n-1?"last":""}" x="${x}" y="${H-22-h}" width="${w}" height="${Math.max(h,1)}" rx="3"/>${v>0&&(n<=14||sh)?`<text x="${x+w/2}" y="${H-26-h}" text-anchor="middle">${fm(v)}</text>`:""}${sh?`<text x="${x+w/2}" y="${H-6}" text-anchor="middle">${lab[i]}</text>`:""}`}).join("")+"</svg>"}
+function chart(pts){const W=640,H=220,l=44,r=12,t=14,b=24,id=reg.push(pts)-1,xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),lo=Math.min(...ys),hi=Math.max(...ys,lo+1);
+ const X=x=>l+(x-x0)/(x1-x0||1)*(W-l-r),Y=y=>t+(1-(y-lo)/(hi-lo))*(H-t-b);let g="";for(let i=0;i<=4;i++){const y=lo+(hi-lo)*i/4;g+=`<line class="gl" x1="${l}" x2="${W-r}" y1="${Y(y)}" y2="${Y(y)}"/><text x="${l-6}" y="${Y(y)+4}" text-anchor="end">${Math.round(y)}</text>`}
+ const d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join("");
+ return`<svg viewBox="0 0 ${W} ${H}" width="100%" data-c="${id}">${g}<path class="ar" d="${d}L${X(x1)},${Y(lo)}L${X(x0)},${Y(lo)}Z"/><path class="ln" d="${d}"/><text x="${l}" y="${H-5}">${fd(x0)}</text><text x="${W-r}" y="${H-5}" text-anchor="end">${fd(x1)}</text><g class="hv" style="display:none"><line class="gl" y1="${t}" y2="${H-b}" stroke="var(--acc)"/><circle r="4.5" fill="var(--acc)"/></g><rect width="${W}" height="${H}" fill="transparent" data-geom="${l},${r},${t},${b},${x0},${x1},${lo},${hi}"/></svg>`}
+const st=c=>c.days==null?["na","No videos"]:c.days<=7?["ok","Active"]:c.days<=30?["warn","Slow"]:["bad","Inactive"];
+const pill=c=>{const[k,t]=st(c);return`<span class="pill ${k}">${t}</span>`};
+const ago=c=>c.days==null?"–":c.days==0?"today":c.days+"d ago";
+const cl=c=>`<span class="clk" data-c="${esc(c.id)}">${esc(c.name)}</span>`;
+const spark=pts=>{const W=300,H=70,xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),lo=Math.min(...ys),hi=Math.max(...ys,lo+1),X=x=>4+(x-x0)/(x1-x0||1)*(W-8),Y=y=>H-4-(y-lo)/(hi-lo)*(H-8),d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join("");return`<svg viewBox="0 0 ${W} ${H}" width="100%"><path class="ar" d="${d}L${X(x1)},${H}L${X(x0)},${H}Z"/><path class="ln" d="${d}"/></svg>`};
+const cumAll=vs=>{if(!vs.length)return cum(vs,2);const f=Math.min(...vs.map(v=>v.t));return cum(vs,Math.min(260,Math.max(2,Math.ceil((S.w0-wk0(f))/(7*DAY))+2)))};
+const monthly=(vs,k=12)=>{const d=new Date(S.now),c=Array(k).fill(0),lab=[];for(let i=k-1;i>=0;i--)lab.push(new Date(d.getFullYear(),d.getMonth()-i,1).toLocaleDateString("en-US",{month:"short"}));
+ vs.forEach(v=>{const x=new Date(v.t),df=(d.getFullYear()-x.getFullYear())*12+d.getMonth()-x.getMonth();if(df>=0&&df<k)c[k-1-df]++});return[c,lab]};
+const hbar=(rows,fm=nf)=>{const m=Math.max(1,...rows.map(r=>r.v)),H=rows.length*22+4;return`<svg viewBox="0 0 640 ${H}" width="100%">`+rows.map((r,i)=>{const w=Math.max(2,r.v/m*400),y=i*22;return`<g data-c="${esc(r.id)}" style="cursor:pointer"><text x="0" y="${y+15}">${esc(r.l.length>22?r.l.slice(0,21)+"…":r.l)}</text><rect class="bar last" x="160" y="${y+4}" width="${w}" height="14" rx="4"/><text x="${166+w}" y="${y+15}">${fm(r.v)}</text></g>`}).join("")+"</svg>"};
+const plc=p=>{const it=p.items,pts=it.map((x,i)=>[x.added,i+1]),step=Math.ceil(pts.length/120),dp=pts.filter((_,i)=>i%step==0||i==pts.length-1);
+ return`<div class="card"><div class="head"><h2>${esc(p.title)}</h2><a href="${esc(p.link)}" target="_blank" rel="noopener">open playlist</a></div><div class="sub" style="margin-bottom:6px">${p.n} videos · created ${fd(p.created)}${it.length?" · first video added "+fd(it[0].added):""}${p.last?" · last added "+fd(p.last):""}</div>${it.length>1?chart(dp):'<div class="sub">The growth graph appears when the dashboard is connected directly to YouTube (API key).</div>'}</div>`};
+function over(){const C=S.ch,tot=f=>C.reduce((a,c)=>a+f(c),0),idle=C.filter(c=>c.days==null||c.days>30);
+ return`<div class="kpis">${[["Channels",C.length,""],["Videos",nf(S.vd.length),"public uploads tracked"],["Subscribers",nf(tot(c=>c.subs||0)),"all channels"],["Total views",nf(tot(c=>c.views)),"all channels"],["Uploads, 7 days",tot(c=>c.n7),""],["Uploads, 30 days",tot(c=>c.n30),""],["Inactive 30+ days",idle.length,"no upload"]].map(([k,v,d])=>`<div class="card"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join("")}</div>
+ <div class="two"><div class="card"><h2>Total videos over time, all channels</h2>${chart(cumAll(S.vd))}</div><div class="card"><h2>Uploads per week, all channels</h2>${bars(weekly(S.vd,26),labels(26))}</div></div>
+ <div class="two"><div class="card"><h2>Videos per channel</h2><div class="sub" style="margin-bottom:6px">Click a bar to open the channel</div>${hbar([...C].sort((a,b)=>b.v.length-a.v.length).map(c=>({id:c.id,l:c.name,v:c.v.length})))}</div>
+ <div class="card"><h2>Days since last upload</h2><div class="sub" style="margin-bottom:6px">Longer bar = quieter channel</div>${hbar([...C].sort((a,b)=>(b.days??9999)-(a.days??9999)).map(c=>({id:c.id,l:c.name,v:c.days??0})),n=>n+"d")}</div></div>`}
+function chans(){const f={count:c=>c.v.length,n30:c=>c.n30,last:c=>c.last??0,name:c=>c.name.toLowerCase()},C=S.ch.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())).sort((a,b)=>sk=="name"?(f.name(a)>f.name(b)?1:-1):f[sk](b)-f[sk](a));
+ return`<div class="card"><div class="head"><h2>Total videos over time, per channel</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><input id="q" placeholder="Search channel…" value="${esc(q)}"><select id="so">${[["count","Most videos"],["n30","Most active (30 days)"],["last","Latest upload"],["name","Name"]].map(([k,t])=>`<option value="${k}" ${sk==k?"selected":""}>${t}</option>`).join("")}</select></div></div><div class="sub" style="margin-bottom:10px">Click a channel for its detailed graphs and playlists.</div>
+ <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px">${C.map(c=>`<div class="card" style="margin:0;cursor:pointer" data-c="${esc(c.id)}"><div class="head" style="margin:0"><b>${esc(c.name)}</b>${pill(c)}</div><div class="v">${nf(c.v.length)}</div><div class="d">videos · +${c.n30} in 30 days · last ${ago(c)}</div>${spark(cum(c.v))}</div>`).join("")}</div></div>`}
+function detail(){const c=S.ch.find(x=>x.id==sel);if(!c){sel=null;return over()}const rv=c.v.slice(0,20).reverse();
+ return`<button class="btn" data-back="1">← All channels</button><div class="card" style="margin-top:12px"><div class="head"><div><h2>${esc(c.name)} ${pill(c)}</h2><div class="sub">${esc(c.handle)} ${c.country?"· "+esc(c.country):""} · created ${fd(c.created)} · <a href="https://www.youtube.com/channel/${esc(c.id)}" target="_blank" rel="noopener">open on YouTube</a></div></div></div>
+ <div class="stats"><div><b>${nf(c.subs)}</b><span>Subscribers</span></div><div><b>${nf(c.views)}</b><span>Total views</span></div><div><b>${nf(c.v.length)}</b><span>Videos tracked</span></div><div><b>${fd(c.last)}</b><span>Last upload (${ago(c)})</span></div><div><b>${c.n7} / ${c.n30}</b><span>Uploads 7d / 30d</span></div><div><b>${c.pls.length}</b><span>Playlists</span></div></div></div>
+ <div class="card"><h2>Total videos over time (all history)</h2>${chart(cumAll(c.v))}</div>
+ <div class="card"><h2>Views on the latest ${rv.length} videos</h2><div class="sub" style="margin-bottom:6px">Oldest on the left, newest on the right</div>${bars(rv.map(v=>v.views),rv.map(v=>new Date(v.t).toLocaleDateString("en-US",{month:"numeric",day:"numeric"})),640,170,kf)}</div>
+ <h2 style="margin:6px 0 10px">Playlists (${c.pls.length})</h2>${[...c.pls].sort((a,b)=>b.n-a.n).map(plc).join("")||'<div class="card sub">No public playlists</div>'}`}
+function render(){reg=[];const k=document.scrollingElement.scrollTop,live=S.mode=="live";
+ $("app").innerHTML=`<header><div><h1>Channel Pulse</h1><div class="sub">${S.ch.length} channels · ${live?"live from "+S.src:"demo data"}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><div class="tabs">${[["over","Overview"],["ch","Channels"]].map(([k,t])=>`<button class="${view==k&&!sel?"on":""}" data-v="${k}">${t}</button>`).join("")}</div><button class="btn" id="set">Settings</button></div></header>
+ ${S.loading?`<div class="note">${esc(S.loading)}</div>`:""}${live?"":`<div class="note">${S.why?"Could not load your sheet: "+esc(S.why)+". ":""}This is <b>demo data</b>. Click <b>Settings</b> to connect YouTube or your sheet.</div>`}${sel?detail():view=="over"?over():chans()}`;document.scrollingElement.scrollTop=k}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-v],[data-c],[data-s],[data-back],[data-cv],#set");if(!t)return;const d=t.dataset;
+ if(t.id=="set"){const c=cfg();$("ak").value=c.apiKey||"";$("ids").value=(c.ids&&c.ids.length?c.ids:DEFAULT_IDS).join("\n");$("cl").value=c.link||"";$("g1").value=c.g1||"";$("g2").value=c.g2||"";$("g3").value=c.g3||"";$("dlg").showModal();return}
+ if(d.v){view=d.v;sel=null;q=""}else if(d.c){sel=d.c;window.scrollTo(0,0)}else if(d.s){sd=sk==d.s?-sd:-1;sk=d.s}else if(d.cv)cv=d.cv;else if(d.back)sel=null;render()});
+document.addEventListener("input",e=>{if(e.target.id=="q"){q=e.target.value;const p=e.target.selectionStart;render();const n=$("q");n.focus();n.setSelectionRange(p,p)}});
+document.addEventListener("change",e=>{if(e.target.id=="so"){sk=e.target.value;render()}});
+$("cx").onclick=()=>$("dlg").close();
+$("cs").onclick=()=>{const m=/\/d\/e\/([^/]+)/.exec($("cl").value),ak=$("ak").value.trim(),ids=$("ids").value.split(/[\s,]+/).filter(x=>/^UC[\w-]{22}$/.test(x));
+ if(!ak&&(!m||!$("g1").value||!$("g2").value||!$("g3").value)){alert("Enter an API key, or the published sheet link and the three gid numbers.");return}
+ try{localStorage.setItem("yt.cfg",JSON.stringify({apiKey:ak,ids,key:m?m[1]:"",link:$("cl").value,g1:$("g1").value.trim(),g2:$("g2").value.trim(),g3:$("g3").value.trim()}))}catch(e){}$("dlg").close();load()};
+$("cc").onclick=()=>{try{localStorage.removeItem("yt.cache")}catch(e){}alert("Saved video data cleared. It will be downloaded again on the next load.")};
+const tip=$("tip");document.addEventListener("mousemove",e=>{const rc=e.target.closest&&e.target.closest("rect[data-geom]");
+ if(!rc){tip.style.display="none";document.querySelectorAll(".hv").forEach(h=>h.style.display="none");return}
+ const svg=rc.ownerSVGElement,[l,r,t,b,x0,x1,lo,hi]=rc.dataset.geom.split(",").map(Number),pts=reg[+svg.dataset.c],bb=svg.getBoundingClientRect(),s=bb.width/640,gx=(e.clientX-bb.left)/s,X=p=>l+(p[0]-x0)/(x1-x0||1)*(640-l-r);
+ let best=pts[0];pts.forEach(p=>{if(Math.abs(X(p)-gx)<Math.abs(X(best)-gx))best=p});const h=svg.querySelector(".hv");h.style.display="";
+ const ln=h.querySelector("line"),ci=h.querySelector("circle");ln.setAttribute("x1",X(best));ln.setAttribute("x2",X(best));ci.setAttribute("cx",X(best));ci.setAttribute("cy",t+(1-(best[1]-lo)/(hi-lo))*(220-t-b));
+ tip.style.display="block";tip.textContent=fd(best[0])+" · "+best[1]+" videos";tip.style.left=e.clientX+12+"px";tip.style.top=e.clientY-34+"px"});
+function demo(){const L="Sinhala English Hindi Tamil German Polish French Compass Swedish Piriwena Chinese Telugu Japanese Thai Indonesian Spanish Italian Russian Korean Hebrew Malayalam Portuguese Sign Swahili Arabic Dutch".split(" ");let s=11;const r=()=>(s=s*16807%2147483647)/2147483647,now=Date.now(),f=t=>new Date(t).toISOString().slice(0,16).replace("T"," "),ch=[],pl=[],vd=[],pi=[];
+ L.forEach((n,i)=>{const id="UCdemo"+i,rate=[.3,.6,1,2,3][i%5],cnt=20+Math.floor(r()*140);ch.push({"Channel ID":id,Channel:n+" channel",Handle:"@"+n.toLowerCase(),Country:"",Created:"2022-01-01 00:00",Subscribers:String(Math.floor(r()*50000)),"Total views":String(Math.floor(r()*2e6)),"Video count (YouTube)":String(cnt)});
+  let t=now-r()*DAY*(i%6==0?60:6);const mine=[];for(let j=0;j<cnt;j++){const row={"Channel ID":id,Channel:n+" channel","Video ID":"v"+i+"_"+j,Title:n+" talk "+(cnt-j),Published:f(t),Duration:"0:45:00",Views:String(Math.floor(r()*5000)),Likes:String(Math.floor(r()*300)),Comments:"0",Link:"#"};vd.push(row);mine.push({row,t});t-=DAY*7/rate*(.5+r())}
+  for(let k=0;k<2+i%4;k++){const m=Math.min(cnt,5+Math.floor(r()*30)),st=Math.floor(r()*(cnt-m+1)),pid="PL"+i+"_"+k;
+   pl.push({"Channel ID":id,"Playlist ID":pid,Playlist:n+" playlist "+(k+1),Created:"2023-03-01 00:00","Videos in playlist":String(m),Link:"#"});
+   mine.slice(st,st+m).forEach(x=>pi.push({pid,vid:x.row["Video ID"],title:x.row.Title,added:x.t+DAY*2*r(),pub:x.t}))}});
+ build(ch,pl,vd,pi);S.mode="demo"}
+const DEFAULT_IDS="UCpA0sy3c2kTFKmiUaLElFfA UCYjkpDLVuptfDjATBhZjt9g UC_7EcrADEltpW7YUNi2PGtA UCbTIYDxMy19pfrrjBs5GGhw UCQBIQeMtEiUMdBp2Wn6tSCw UCpEoYuHHX302z6bDCysmBrA UC1CTN5DyTVhp3jg0N_31bEQ UCAPJDc4WXfDDtlA6zbHyHfg UC6Eu385-H9GdRH4C1HWblNQ UC6SUQbYnWreTcWxOO2GohfA UC5ehlbHLLvzCcj_6odvrIlw UCz0osujaap_GbQ5kgfBV9HA UCtg8UDpW-ZIQEp7KgLlXHTQ UCQlSuf1vK8G4oTA0I-r9o5A UCOx0Migu86jD7zTg6UnELEQ UCKrTK4M3xPSDJKbgnbdXzsw UClwD95asWrhuySCda_Nu9Tg UCFVMuq8lRWZSE1w5bcs8Rng UCy_fArN3ouMV2fALBe0lzwg UCY2Ae63tBOZptJ3P_469C7g UCVlEzaOOdwIibWKZNns_T2A UCZ4EDypTf013AOrNR8mpRHg UCmXyV6KtlMc5I5Hgpr29SBw UCvxya6lJ5DS3k8kwlGgCubw UCv18ytPUY4OAQPvDNGfKWvA UCU6YLOMAQGDUHc9FWhK8Nag".split(" ");
+const yt=async(p,o)=>{const u=new URL("https://www.googleapis.com/youtube/v3/"+p);Object.entries(o).forEach(([k,v])=>{if(v!==""&&v!=null)u.searchParams.set(k,v)});const r=await fetch(u),j=await r.json().catch(()=>({}));if(!r.ok)throw(j.error&&j.error.message)||"HTTP "+r.status;return j};
+const isoD=x=>{const m=/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(x||"");return m?(+m[1]||0)+":"+String(+m[2]||0).padStart(2,"0")+":"+String(+m[3]||0).padStart(2,"0"):""};
+async function loadYT(c){const key=c.apiKey,ids=c.ids&&c.ids.length?c.ids:DEFAULT_IDS;let cache={};try{cache=JSON.parse(localStorage.getItem("yt.cache"))||{}}catch(e){}
+ const known=cache.v||{};S.loading="Loading channels from YouTube…";render();
+ const chs=[];for(let i=0;i<ids.length;i+=50){const r=await yt("channels",{part:"snippet,statistics,contentDetails",id:ids.slice(i,i+50).join(","),maxResults:50,key});chs.push(...(r.items||[]))}
+ let pls=cache.p&&Date.now()-cache.pt<DAY?cache.p:null,pt=cache.pt;
+ if(!pls){pls=[];pt=Date.now();await Promise.all(ids.map(async id=>{let tok="";do{const r=await yt("playlists",{part:"snippet,contentDetails",channelId:id,maxResults:50,pageToken:tok,key}).catch(()=>({items:[]}));
+  (r.items||[]).forEach(p=>pls.push({"Channel ID":id,"Playlist ID":p.id,Playlist:p.snippet.title,Created:p.snippet.publishedAt,"Videos in playlist":String(p.contentDetails.itemCount),Link:"https://www.youtube.com/playlist?list="+p.id}));tok=r.nextPageToken}while(tok)}))}
+ const fresh={};let done=0;
+ await Promise.all(ids.map(async id=>{const old=known[id]||[],seen=new Set(old.map(v=>v[2])),add=[];let tok="",stop=false;
+  do{const r=await yt("playlistItems",{part:"snippet,contentDetails",playlistId:"UU"+id.slice(2),maxResults:50,pageToken:tok,key}).catch(e=>{if(/not\s*found/i.test(String(e)))return{items:[]};throw e});
+   for(const it of r.items||[]){const vid=it.contentDetails.videoId,pub=it.contentDetails.videoPublishedAt,tt=it.snippet.title;if(seen.has(vid)){stop=true;break}
+    if(!pub||tt=="Private video"||tt=="Deleted video")continue;add.push([id,it.snippet.videoOwnerChannelTitle||it.snippet.channelTitle,vid,tt,Date.parse(pub),"",0,0,0])}
+   tok=r.nextPageToken}while(tok&&!stop);
+  fresh[id]=add.concat(old);S.loading="Loading videos from YouTube… "+(++done)+" of "+ids.length;render()}));
+ const all=Object.values(fresh).flat(),byId=Object.fromEntries(all.map(v=>[v[2],v])),need=[];
+ Object.values(fresh).forEach(a=>a.forEach((v,i)=>{if(i<50||v[5]==="")need.push(v[2])}));
+ const chunks=[];for(let i=0;i<need.length;i+=50)chunks.push(need.slice(i,i+50));
+ await Promise.all(chunks.map(async ch=>{const r=await yt("videos",{part:"contentDetails,statistics",id:ch.join(","),maxResults:50,key});
+  (r.items||[]).forEach(it=>{const v=byId[it.id];if(!v)return;v[5]=isoD(it.contentDetails.duration)||"-";v[6]=+it.statistics.viewCount||0;v[7]=+it.statistics.likeCount||0;v[8]=+it.statistics.commentCount||0})}));
+ all.forEach(v=>{if(v[5]==="")v[5]="-"});
+ const cpi=cache.pi||{},npi={},pi=[];let pd=0;
+ await Promise.all(pls.map(async p=>{const pid=p["Playlist ID"],n=+p["Videos in playlist"];let arr=cpi[pid]&&cpi[pid].n==n?cpi[pid].items:null,ok=true;
+  if(!arr){arr=[];let tok="";try{do{const r=await yt("playlistItems",{part:"snippet,contentDetails",playlistId:pid,maxResults:50,pageToken:tok,key});
+   (r.items||[]).forEach(it=>{const tt=it.snippet.title;if(tt=="Private video"||tt=="Deleted video")return;arr.push([it.contentDetails.videoId,tt,Date.parse(it.snippet.publishedAt),Date.parse(it.contentDetails.videoPublishedAt||it.snippet.publishedAt)])});tok=r.nextPageToken}while(tok)}catch(e){arr=[];ok=false}}
+  if(ok)npi[pid]={n,items:arr};arr.forEach(a=>pi.push({pid,vid:a[0],title:a[1],added:a[2],pub:a[3]}));if(++pd%5==0){S.loading="Loading playlists… "+pd+" of "+pls.length;render()}}));
+ try{localStorage.setItem("yt.cache",JSON.stringify({v:fresh,p:pls,pt,pi:npi}))}catch(e){}
+ build(chs.map(c=>({"Channel ID":c.id,Channel:c.snippet.title,Handle:c.snippet.customUrl||"",Country:c.snippet.country||"",Created:c.snippet.publishedAt,Subscribers:c.statistics.hiddenSubscriberCount?"hidden":c.statistics.subscriberCount,"Total views":c.statistics.viewCount,"Video count (YouTube)":c.statistics.videoCount})),pls,
+  all.map(v=>({"Channel ID":v[0],Channel:v[1],"Video ID":v[2],Title:v[3],Published:new Date(v[4]).toISOString(),Duration:v[5]=="-"?"":v[5],Views:String(v[6]),Likes:String(v[7]),Comments:String(v[8]),Link:"https://www.youtube.com/watch?v="+v[2]})),pi);
+ S.mode="live";S.src="YouTube";S.why="";S.loading=""}
+async function load(){const c=cfg();S.loading="";
+ if(c.apiKey){try{await loadYT(c)}catch(e){S.why=String(e&&e.message||e);S.loading="";demo()}render();return}
+ if(!c.key){demo();render();return}
+ try{const g=async gid=>{const r=await fetch(`https://docs.google.com/spreadsheets/d/e/${c.key}/pub?gid=${gid}&single=true&output=csv`);if(!r.ok)throw"HTTP "+r.status+" (gid "+gid+")";return objs(csv(await r.text()))};
+  const[a,b,d]=await Promise.all([g(c.g1),g(c.g2),g(c.g3)]);if(!a.length||!a[0]["Channel ID"])throw"the Channels tab looks empty or has different columns";build(a,b,d);S.mode="live";S.src="your sheet";S.why=""}
+ catch(e){S.why=String(e&&e.message||e);demo()}render()}
+demo();render();load();
+</script></body></html>
